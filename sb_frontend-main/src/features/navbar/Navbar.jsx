@@ -108,7 +108,10 @@ export default function Navbar() {
             <MdOutlineFavorite></MdOutlineFavorite>
           </a>
           <a className="text-2xl p-3">
+            <button><a href='/login'>
             <MdAccountCircle></MdAccountCircle>
+            </a>
+            </button>
           </a>
         </div>
       </div>

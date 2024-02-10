@@ -1,10 +1,35 @@
 import React from 'react'
-import { useState } from 'react';
-import {Link} from 'react-router-dom'
-
+import { useState } from 'react'
+import {Link,useNavigate} from 'react-router-dom'
+import Validation from './LoginValidation';
+import axios from 'axios'
 export default function Login() {
+  const[values,setValues]=useState({
+    email:'',
+    password:''
 
-    
+      })
+      const navigate=useNavigate();
+      const[errors,setErrors]=useState({})
+      const handleInput=(event)=>{
+        setValues(prev=>({...prev,[event.target.name]:[event.target.value]}))
+  
+      }
+    const handleSubmit=(event)=>{
+      event.preventDefault();
+      setErrors(Validation(values));
+    if(errors.email==="" && errors.password==="" ){
+          axios.post('http://localhost:8081/swadeshi',values)
+          .then(res=>{
+              if(res.data==="Success"){
+                navigate('/');
+              }else{
+                alert("no record");
+              }
+          })
+    .catch(err=>console.log(err));
+  }
+}
   return (
     <div className='bg-base-200'>
 
@@ -27,7 +52,7 @@ export default function Login() {
             Sign up
           </Link>
         </p>
-          <form className="mt-6 flex flex-col space-y-4">
+          <form action=""onSubmit={handleSubmit} className="mt-6 flex flex-col space-y-4">
             <div>
               <label
                 htmlFor="email"
@@ -40,8 +65,10 @@ export default function Login() {
                 placeholder='Type your email or phone no.'
                 name="email"
                 type="email"
+                onChange={handleInput}
                 className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
               />
+              {errors.email &&<span className='text-danger'>{errors.email}</span>}
             </div>
             <div>
               <label
@@ -55,8 +82,10 @@ export default function Login() {
                 name="password"
                 placeholder='Type your password'
                 type="password"
+                onChange={handleInput}
                 className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
               />
+              {errors.password &&<span className='text-danger'>{errors.password}</span>}
             </div>
 
             <div className="flex justify-end">

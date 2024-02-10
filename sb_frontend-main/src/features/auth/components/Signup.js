@@ -1,9 +1,32 @@
 import React from "react"
-import { Link } from 'react-router-dom'
-
+import { Link ,useNavigate} from 'react-router-dom'
+import { useState } from 'react'
+import Validation from './SignupValidation';
+import axios from 'axios'
 export default function Signup() {
+  const[values,setValues]=useState({
+    name:'',
+    email:'',
+    password:''
 
-
+      })
+      const navigate=useNavigate();
+      const[errors,setErrors]=useState({})
+      const handleInput=(event)=>{
+        setValues(prev=>({...prev,[event.target.name]:[event.target.value]}))
+  
+      }
+      const handleSubmit=(event)=>{
+        event.preventDefault();
+        setErrors(Validation(values));
+      if(errors.name==="" && errors.email==="" && errors.password==="" ){
+            axios.post('http://localhost:8081/swadeshi',values)
+            .then(res=>{
+                 navigate('/login');
+            })
+      .catch(err=>console.log(err));
+    }
+  }
     return (
         <div className='bg-base-200'>
     
@@ -29,8 +52,26 @@ export default function Signup() {
               </Link>
             </p>
     
-              <form className="mt-6 flex flex-col space-y-4">
-                <div>
+              <form action="" onSubmit={handleSubmit} className="mt-6 flex flex-col space-y-4">
+              <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-semibold text-heading"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    placeholder="Type your name"
+                    name="name"
+                    type="name"
+                    onChange={handleInput}
+                    className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
+                  />
+                   {errors.name &&<span className='text-danger'>{errors.name}</span>}
+              </div>
+    
+              <div>
                   <label
                     htmlFor="email"
                     className="block text-sm font-semibold text-heading"
@@ -41,11 +82,13 @@ export default function Signup() {
                     id="email"
                     placeholder="Type your email or phone no."
                     name="email"
-                    type=""
+                    type="email"
+                    onChange={handleInput}
                     className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
                   />
-                </div>
-                <div>
+                   {errors.email &&<span className='text-danger'>{errors.email}</span>}
+              </div>
+              <div>
                   <label
                     htmlFor="password"
                     className="block text-sm font-semibold text-heading"
@@ -57,38 +100,21 @@ export default function Signup() {
                     placeholder="Type password"
                     name="password"
                     type="password"
+                    onChange={handleInput}
                     className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
                   />
-                </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-semibold text-heading"
-                  >
-                   Confirm password
-                  </label>
-                  <input
-                    id="confirm password"
-                    placeholder="Type password again"
-                    name=" confirm password"
-                    type="password"
-                    className="mt-2 block w-full rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 font-semibold text-heading placeholder:text-text/50 focus:border-success focus:outline-none focus:ring-0 sm:text-sm"
-                  />
-                </div>
-    
-                <div className="flex justify-end">
+                  {errors.password &&<span className='text-danger'>{errors.password}</span>}
+              </div>
               
-                </div>
     
                 <button
                   type="submit"
                   className="inline-flex cursor-pointer items-center justify-center rounded-xl border-2 border-success bg-success px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
                 >
-                  Get OTP
+                  Sign-Up
                 </button>
     
                 <button
-                  type="button"
                   className="inline-flex cursor-pointer items-center justify-center rounded-xl border-2 border-muted-3 bg-transparent px-4 py-2.5 text-sm font-semibold  text-text shadow-sm hover:text-heading focus:text-heading focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:text-text dark:focus:ring-white/80"
                 >
                   <svg viewBox="0 0 48 48" className="mr-2 h-5 w-5">

@@ -22,7 +22,7 @@ import ProductListPage from "./pages/ProductListPage";
 // root Routes
 const router = createBrowserRouter([
   {
-    path : '/',
+    path : '/home',
     element : <Home></Home>
   },
   {

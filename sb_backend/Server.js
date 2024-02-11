@@ -14,7 +14,7 @@ const db=mysql.createConnection({
     database:"swadeshi"
 })
 app.post('/swadeshi',(req,res)=>{
-    const sql="INSERT INTO login(`name`,`email`,`password`)VALUE(?)";
+    const sql="INSERT INTO login(`name`,`email`,`password`)VALUES(?)";
     const values=[
         req.body.name,
         req.body.email,
@@ -30,7 +30,7 @@ app.post('/swadeshi',(req,res)=>{
     })
 })
 
-app.post('/login',(req,res)=>{
+app.get('/login',(req,res)=>{
     const sql="SELECT * FROM login WHERE 'email'=? AND 'password'=?";
     
     
@@ -39,7 +39,7 @@ app.post('/login',(req,res)=>{
             return res.json("Error");
         }
         if(data.length>0){
-            return res.json("success");
+            return res.json("Success");
         }else{
             return res.json("Fail");
         }

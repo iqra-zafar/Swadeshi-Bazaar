@@ -15,19 +15,19 @@ export default function Login() {
         setValues(prev=>({...prev,[event.target.name]:[event.target.value]}))
   
       }
-    const handleSubmit=(event)=>{
+      const handleSubmit=(event)=>{
       event.preventDefault();
       setErrors(Validation(values));
-    if(errors.email==="" && errors.password==="" ){
+      if(errors.email==="" && errors.password==="" ){
           axios.post('http://localhost:8081/swadeshi',values)
           .then(res=>{
               if(res.data==="Success"){
-                navigate('/');
+                navigate('/home');
               }else{
                 alert("no record");
               }
           })
-    .catch(err=>console.log(err));
+      .catch(err=>console.log(err));
   }
 }
   return (
@@ -101,9 +101,7 @@ export default function Login() {
               type="submit"
               className="inline-flex cursor-pointer items-center justify-center rounded-xl border-2 border-success bg-success px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
             >
-              <a href='/home'>
               Login
-              </a>
             </button>
 
             <button

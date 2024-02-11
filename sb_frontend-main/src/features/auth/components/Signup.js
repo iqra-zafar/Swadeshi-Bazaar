@@ -22,7 +22,7 @@ export default function Signup() {
       if(errors.name==="" && errors.email==="" && errors.password==="" ){
             axios.post('http://localhost:8081/swadeshi',values)
             .then(res=>{
-                 navigate('/login');
+                 navigate('/home');
             })
       .catch(err=>console.log(err));
     }

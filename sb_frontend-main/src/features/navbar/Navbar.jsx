@@ -1,8 +1,25 @@
+import React,{useEffect,useState} from 'react'
 import { MdAccountCircle, MdOutlineFavorite } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
-
+import axios from 'axios'
+import{useNavigate} from 'react-router-dom'
 export default function Navbar() {
-
+    const [name,setName]=useState('')
+    const navigate =useNavigate()
+    axios.defaults.withCredentials=true;
+    useEffect(()=>{
+      axios.get('http://localhost:8081')
+      .then(res=>{
+        if(res.data==="Success"){
+           setName(res.data.name)
+        } else{
+           navigate('/login')
+        }
+  
+    })
+    .catch(err=>console.log(err));
+    },[])
+  
 
   return (
     <div>
@@ -110,6 +127,7 @@ export default function Navbar() {
           <a className="text-2xl p-3">
             <button><a href='/login'>
             <MdAccountCircle></MdAccountCircle>
+            <h3>hi{name}</h3>
             </a>
             </button>
           </a>

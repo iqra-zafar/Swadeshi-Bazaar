@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Navbar from '../features/navbar/Navbar'
 import Hero from '../features/hero/Hero'
 import Carousel from '../features/hero/Carousel'
@@ -10,8 +10,10 @@ import HomeSlider from '../features/hero/HomeSlider'
 import FooterBottom from '../features/footer/FooterBottom'
 import Footer from '../features/footer/FooterMiddle'
 import FooterTop from '../features/footer/FooterTop'
-
+import axios from 'axios'
+import{useNavigate} from 'react-router-dom'
 export default function Home() {
+
 
   let slides = [
     "https://as1.ftcdn.net/v2/jpg/02/66/40/40/1000_F_266404077_U620rNn9gWl7wZ6JT2QG0nSg6k8Xdwfy.jpg",

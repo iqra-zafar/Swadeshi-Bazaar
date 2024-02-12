@@ -15,14 +15,15 @@ export default function Login() {
         setValues(prev=>({...prev,[event.target.name]:[event.target.value]}))
   
       }
+      axios.defaults.withCredentials=true;
       const handleSubmit=(event)=>{
       event.preventDefault();
       setErrors(Validation(values));
       if(errors.email==="" && errors.password==="" ){
-          axios.post('http://localhost:8081/swadeshi',values)
+          axios.post('http://localhost:8081/login',values)
           .then(res=>{
               if(res.data==="Success"){
-                navigate('/home');
+                navigate('/');
               }else{
                 alert("no record");
               }
